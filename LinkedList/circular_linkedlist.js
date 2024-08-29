@@ -114,6 +114,28 @@ class LinkedList {
     this.size -= 1;
   }
 
+  reverse() {
+    if (this.is_empty() || this.head.next === this.head) {
+      // Empty list or single element list, no need to reverse
+      return;
+    }
+
+    let prev = this.tail; // Start with the tail to handle circular reference
+    let current = this.head;
+    let next = null;
+
+    do {
+      next = current.next; // Store next node
+      current.next = prev; // Reverse current node's pointer
+      prev = current; // Move prev to current node
+      current = next; // Move to next node
+    } while (current !== this.head);
+
+    // After loop, current is back to head
+    this.tail = this.head; // Old head is new tail
+    this.head = prev; // Old tail is new head
+  }
+
   clear() {
     this.head = null;
     this.size = 0;
