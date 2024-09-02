@@ -1,7 +1,7 @@
 class HashTable {
   constructor(size) {
     this.table = new Array(size);
-    this.size = 0;
+    this.size = size;
   }
 
   hash(key) {
