@@ -24,6 +24,26 @@ input = ['eat','tea','tan','ate','nat','bat']
 print(anagram.group_anagrams(input))
 
 
+
+#O(n)
+def two_sum_unsorted(arr, target):
+    seen = {}
+    
+    for i, value in enumerate(arr):
+        compliment = target - value
+        if(compliment in seen):
+            return [compliment, value]
+        else:
+            print(seen)
+            seen[value] = i
+    return None
+
+arry = [3, 5, 2, -4, 8, 11]
+total = 19
+print(two_sum_unsorted(arry,total))
+
+
+
 """
 nyc_weather.csv contains new york city weather for first few days in the month of January. Write a program that can answer following,
 What was the average temperature in first week of Jan

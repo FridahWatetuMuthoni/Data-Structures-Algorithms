@@ -35,38 +35,6 @@ target = 6
 print("Two sum")
 print(two_sum(arr, target))
 
-#O(n)
-def two_sum_unsorted(arr, target):
-    seen = {}
-    
-    for i, value in enumerate(arr):
-        compliment = target - value
-        if(compliment in seen):
-            return [compliment, value]
-        else:
-            print(seen)
-            seen[value] = i
-    return None
-
-arry = [3, 5, 2, -4, 8, 11]
-total = 19
-print(two_sum_unsorted(arry,total))
-
-
-def reverse_string(str):
-    letters = []
-    reversed_string = []
-    
-    for letter in str:
-        letters.append(letter)
-    
-    while(len(letters) > 0):
-        reversed_string.append(letters.pop())
-    
-    return "".join(reversed_string)
-    
-
-print(reverse_string('fridah'))
 
 
 """
