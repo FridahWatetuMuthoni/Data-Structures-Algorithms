@@ -54,9 +54,9 @@ class BinarySearchTree:
             current.data = succesor.data
             #delete the minimum node found
             if succesor_parent.left == succesor:
-                succesor_parent.left = None
+                succesor_parent.left = succesor.right
             else:
-                succesor_parent.right = None
+                succesor_parent.right = succesor.right
         #else , if node has only one child
         else:
             child = None

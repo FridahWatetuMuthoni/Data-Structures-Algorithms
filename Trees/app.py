@@ -130,9 +130,9 @@ class BinarySearchTree:
         
             #delete the successors node
             if succesor_parent.left == succesor:
-                succesor_parent.left = None
+                succesor_parent.left = succesor.right
             else:
-                succesor_parent.right = None
+                succesor_parent.right = succesor.right
         
         else:
             #Determine the child
