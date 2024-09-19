@@ -4,7 +4,8 @@ class Node:
         self.left = None
         self.right = None
 
-class BinarySearchTree:
+
+class BST:
     def __init__(self):
         self.root = None
         self.size = 0
@@ -12,16 +13,16 @@ class BinarySearchTree:
     def is_empty(self):
         return self.size == 0
     
-    def insert(self, data):
+    def insert(self,data):
         new_node = Node(data)
         
-        if(self.is_empty()):
-            self.root  = new_node
+        if self.is_empty():
+            self.root = new_node
         else:
             current = self.root
             while(current is not None):
                 if(data < current.data):
-                    if(current.left is None):
+                    if current.left is None:
                         current.left = new_node
                         break
                     current = current.left
@@ -30,44 +31,50 @@ class BinarySearchTree:
                         current.right = new_node
                         break
                     current = current.right
-        
         self.size += 1
     
-    def search(self,target):
+    def search(self, target):
         current = self.root
+        
         while(current is not None):
-            if current.data == target:
+            if target == current.data:
                 return True
-            if(target < current.data):
+            if target < current.data:
                 current = current.left
             else:
                 current = current.right
         return False
     
-    def min(self):
-        current = self.root
-        while(current.left is not None):
-            current = current.left
-        return current.data
-    
     def max(self):
         current = self.root
+        
         while(current.right is not None):
             current = current.right
+        
         return current.data
     
-    #Depth First Search
+    def min(self):
+        current = self.root
+        
+        while(current.left is not None):
+            current = current.left
+        
+        return current.data
+    
+    #depth first search
     #LROOTR
     def inorder(self):
         results = []
+        
         def traverse(node):
-            if(node.left):
+            if node.left:
                 traverse(node.left)
                 
             results.append(node.data)
             
-            if(node.right):
+            if node.right:
                 traverse(node.right)
+        
         traverse(self.root)
         return results
     
@@ -77,10 +84,13 @@ class BinarySearchTree:
         
         def traverse(node):
             results.append(node.data)
+
             if node.left:
                 traverse(node.left)
+                            
             if node.right:
                 traverse(node.right)
+        
         traverse(self.root)
         return results
     
@@ -91,14 +101,16 @@ class BinarySearchTree:
         def traverse(node):
             if node.left:
                 traverse(node.left)
+                            
             if node.right:
                 traverse(node.right)
+            
             results.append(node.data)
         
         traverse(self.root)
         return results
     
-    #Breadth First Search
+    #breadth first search
     def bfs(self):
         results = []
         queue = []
@@ -108,6 +120,7 @@ class BinarySearchTree:
         while(len(queue) > 0):
             current = queue.pop(0)
             results.append(current.data)
+            
             if current.left:
                 queue.append(current.left)
             if current.right:
@@ -115,51 +128,54 @@ class BinarySearchTree:
         return results
     
     def delete(self, target):
-        #check if the bst is empty
-        if(self.is_empty()):
+        if self.is_empty():
             return 'The Binary Search Tree is empty'
         
-        #initialise the parent and current
-        parent = None
+        #intialise variables
         current = self.root
+        parent = None
         
         #find the node to delete
-        while(current is not None and target != current.data):
+        while(current is not None and current.data != target):
             parent = current
             if target < current.data:
                 current = current.left
             else:
                 current = current.right
         
-        #check if the target was found or not
+        #check if we found the value to delete or not
         if current is None:
-            return "Node was not found in the tree"
+            return 'The value to delete was not found'
         
-        # Case One: no children its a leaf node
-        if(current.left is None and current.right is None):
-            if(self.root == current):
+        #delete the found value
+        #has no children
+        if current.left is None and current.right is None:
+            if self.root  == current:
                 self.root = None
             else:
                 if parent.left == current:
                     parent.left = None
-                else:
+                if parent.right == current:
                     parent.right = None
-        # Case Two: it has two children
-        elif(current.left and current.right):
+        #has two children
+        elif current.left and current.right:
+            #find the successor => the smallest value on the right side of current
             succesor_parent = current
             succesor = current.right
-            while(succesor.left is not None):
+            
+            while succesor.left is not None:
                 succesor_parent = succesor
                 succesor = succesor.left
-            #swap the data
+            
+            #swap the values with current
             current.data = succesor.data
             
             #delete the succesor
             if succesor_parent.left == succesor:
                 succesor_parent.left = succesor.right
-            else:
+            if succesor_parent.right == succesor:
                 succesor_parent.right = succesor.right
-        #Case Three: it has one child
+        #has one child
         else:
             child = None
             if current.left:
@@ -167,16 +183,31 @@ class BinarySearchTree:
             if current.right:
                 child = current.right
             
-            if current == self.root:
+            #check if the current is self.root
+            
+            if self.root == current:
                 self.root = child
-            elif parent.left == current:
-                parent.left = child
             else:
-                parent.right = child
-        
+                if parent.left == current:
+                    parent.left = child
+                if parent.right == current:
+                    parent.right = child
         self.size -= 1
+    
+    #use depth first search
+    def invert_binary_tree(self):
+        def traverse(node):
+            node.left, node.right = node.right, node.left
+            
+            if node.left:
+                traverse(node.left)
+            if node.right:
+                traverse(node.right)
+        traverse(self.root)
 
-bst = BinarySearchTree()
+
+
+bst = BST()
 bst.insert(15)
 bst.insert(3)
 bst.insert(36)
@@ -184,6 +215,15 @@ bst.insert(2)
 bst.insert(12)
 bst.insert(28)
 bst.insert(39)
+
+#check if its a valid binary tree
+def validate_binary_search_tree():
+    arr = bst.inorder()
+    for i in range(len(arr) - 1):
+        if arr[i] > arr[i+1]:
+            return False
+    return True
+
 
 print("Inorder:", bst.inorder())
 # inorder => [2, 3, 12, 15, 28, 36, 39]
@@ -210,3 +250,14 @@ print("BFS before deletion:", bst.bfs())
 bst.delete(36)
 print("BFS after deleting 36:", bst.bfs())
 # bfs => [15, 3, 39, 2, 12, 28]
+
+# Before inversion
+is_a_valid_binary_tree = validate_binary_search_tree()
+print("Is valid before inversion:", is_a_valid_binary_tree)  # Expected: True
+
+# Invert the tree
+bst.invert_binary_tree()
+
+# After inversion
+is_a_valid_binary_tree = validate_binary_search_tree()
+print("Is valid after inversion:", is_a_valid_binary_tree)  # Expected: False

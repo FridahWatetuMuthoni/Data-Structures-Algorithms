@@ -63,6 +63,9 @@ class BinarySearchTree:
         traverse(self.root)
     
     def check_if_tree_is_balanced(self):
+        #check every node from the root
+        #if the node is a leaf node you return yes its balanced with a height of 0 => base case
+        #we are going to use depth first search
         def check_balance_and_height(node):
             if node is None:
                 return (True, 0)  # (is_balanced, height)
