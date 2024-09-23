@@ -72,7 +72,11 @@ class PriorityQueue:
             return None
         
         self.heap[index] = ( priority, data)
-        self.bubble_up(index)
+        
+        if priority < self.heap[self.get_parent(index)[0]]:
+            self.bubble_up(index)
+        else:
+            self.bubble_down(index)
 
 pq = PriorityQueue()
 pq.insert(3, 'Task 1')
