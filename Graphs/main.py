@@ -10,4 +10,5 @@ A graph is bipartite if you can color the graph using two colors such that no tw
 
 5. Problem: Given a directed acyclic graph (DAG), perform topological sorting.
 
+6. Find all nodes having length of shortest path from a node equal to 2
 """
